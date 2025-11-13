@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Painéis Power BI - Alloha Fibra</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f6f8fb;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    nav {
+      width: 250px;
+      background: #001059;
+      color: white;
+      padding: 20px 15px;
+      box-sizing: border-box;
+      display: none;
+      flex-direction: column;
+      box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    nav h2 { margin-bottom: 10px; font-size: 18px; }
+    nav h3 { font-size: 14px; color: #48EF6C; margin-bottom: 15px; font-weight: 500; }
+
+    nav button {
+      margin: 5px 0; padding: 10px; border: none; border-radius: 5px;
+      background: rgba(255,255,255,0.1); color: white; cursor: pointer;
+      font-size: 14px; transition: all .3s; text-align: left; width: 100%;
+    }
+    nav button:hover, nav button.active { background:#48EF6C; color:#001059; font-weight:600; }
+
+    main { flex: 1; position: relative; overflow: hidden; }
+
+    iframe {
+      width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0;
+      opacity: 0; transition: opacity .5s ease-in-out; z-index: 2; pointer-events: none;
+    }
+    iframe.show { opacity: 1; pointer-events: all; }
+
+    #placeholder {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      display: none; flex-direction: column; align-items: center; text-align: center; z-index: 1;
+    }
+    #placeholder img {
+      width: auto; height: 60vh; max-width: 90%; border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0, .3); object-fit: contain;
+    }
+    #placeholder .legenda {
+      margin-top: 15px; font-weight: bold; color: #001059; background: #fff;
+      padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0, .1);
+    }
+
+    #home {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: #f6f8fb; text-align: center; z-index: 5;
+    }
+    #home img { width: 240px; margin-bottom: 30px; }
+
+    .card-container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+    .card {
+      width: 230px; height: 160px; background: #fff; border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .1); display: flex; flex-direction: column;
+      justify-content: center; align-items: center; cursor: pointer; transition: all .3s;
+      border: 2px solid transparent;
+    }
+    .card:hover { transform: scale(1.05); border-color: #48EF6C; }
+    .card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
+    .card span { font-size: 16px; color: #001059; font-weight: 600; }
+    .card.disabled { opacity: .5; cursor: not-allowed; }
+
+    .loader {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      border: 6px solid #f3f3f3; border-top: 6px solid #48EF6C; border-radius: 50%;
+      width: 40px; height: 40px; animation: spin 1s linear infinite; display: none; z-index: 3;
+    }
+    @keyframes spin { 0%{transform:translate(-50%,-50%) rotate(0)} 100%{transform:translate(-50%,-50%) rotate(360deg)} }
+  </style>
+</head>
+
+<body style="display:none;"> <!-- corpo escondido até senha correta -->
+
+  <nav id="sidebar">
+    <h2 id="painelTitulo">Painel</h2>
+    <h3 id="dashAtual">Selecione um dashboard</h3>
+    <div id="menuRelatorios"></div>
+  </nav>
+
+  <main>
+    <div id="home">
+      <!-- As imagens agora vêm direto do SharePoint -->
+      <img src="https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/logo_alloha_positivo.png" alt="Alloha Fibra">
+      <h1>Bem-vindo ao Painel Power BI</h1>
+      <p>Escolha o painel que deseja acessar:</p>
+
+      <div class="card-container">
+        <div class="card" onclick="abrirPainel('logistica')">
+          <img src="https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/logistica.png" alt="Logística Reversa">
+          <span>Logística Reversa</span>
+        </div>
+        <div class="card" onclick="abrirPainel('frotas')">
+          <img src="https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/frota.png" alt="Frotas">
+          <span>Frotas</span>
+        </div>
+        <div class="card disabled">
+          <img src="https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/facilites.png" alt="Facilities">
+          <span>Facilities</span>
+          <small>EM CONSTRUÇÃO</small>
+        </div>
+      </div>
+    </div>
+
+    <div id="placeholder">
+      <img id="placeholderImg" src="" alt="Capa do painel">
+      <div class="legenda">Selecione um BI para tomar sua decisão</div>
+    </div>
+
+    <div class="loader" id="loader"></div>
+
+    <iframe id="rel1"></iframe>
+    <iframe id="rel2"></iframe>
+    <iframe id="rel3"></iframe>
+    <iframe id="rel4"></iframe>
+    <iframe id="rel5"></iframe>
+    <iframe id="rel6"></iframe>
+  </main>
+
+  <script>
+    // ===== Proteção reforçada =====
+    const senha = prompt("🔒 Digite a senha para acessar o Painel Alloha Frotas:");
+    if (senha === "allohafrotas2025") {
+      document.body.style.display = "flex"; // só mostra se senha estiver correta
+    } else {
+      document.write("<h1 style='text-align:center;color:red;margin-top:20%'>Acesso negado.</h1>");
+      throw new Error("Acesso negado");
+    }
+
+    // ===== Dados dos painéis =====
+    const sidebar = document.getElementById('sidebar');
+    const home = document.getElementById('home');
+    const placeholder = document.getElementById('placeholder');
+    const placeholderImg = document.getElementById('placeholderImg');
+    const menuRelatorios = document.getElementById('menuRelatorios');
+    const titulo = document.getElementById('painelTitulo');
+    const dashAtual = document.getElementById('dashAtual');
+    const loader = document.getElementById('loader');
+
+    const paineis = {
+      logistica: {
+        titulo: "Logística Reversa",
+        capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/capa%20blog%20alloha%20logística.jpg",
+        relatorios: [
+          { nome: "B2B", link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "B2C", link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Rastreabilidade", link: "https://app.powerbi.com/view?r=eyJrIjoiNmEyZjBhOGItYjU4Mi00OTUwLTg2YTEtZGExOGEzZmUzNjI4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Acompanhamento OS", link: "https://app.powerbi.com/view?r=eyJrIjoiMjlhZTYyZTYtNDQyZS00NDZiLWFjMDMtMTA5ZmFlM2M2OWIwIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Distribuição OS", link: "https://app.powerbi.com/view?r=eyJrIjoiNGRhMDYwMTUtN2E4OC00Mzg1LWEwMzctYjNjZjg5MGNhMzQxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+        ]
+      },
+      frotas: {
+        titulo: "Frotas",
+        capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/gestao-de-frotas-equipes.png",
+        relatorios: [
+          { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Performance de Abastecimento", link: "https://app.powerbi.com/view?r=eyJrIjoiYmQ3NGUzMTktNDJkYi00ZTg4LWI4ZTctMmM2MWVhZjQ0NDBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Manutenção", link: "https://app.powerbi.com/view?r=eyJrIjoiNzJkMWZkOTAtZjYxZi00N2YyLTg1MTctN2ZkOGVmM2YwZTA4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+        ]
+      }
+    };
+
+    function abrirPainel(tipo) {
+      const painel = paineis[tipo];
+      titulo.textContent = painel.titulo;
+      sidebar.style.display = 'flex';
+      home.style.display = 'none';
+      placeholder.style.display = 'flex';
+      placeholderImg.src = painel.capa;
+      montarMenu(painel.relatorios);
+    }
+
+    function montarMenu(relatorios) {
+      menuRelatorios.innerHTML = '';
+      relatorios.forEach((rel, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = rel.nome;
+        btn.onclick = () => showReport(`rel${i+1}`, btn, rel.link, rel.nome);
+        menuRelatorios.appendChild(btn);
+      });
+      const voltar = document.createElement('button');
+      voltar.textContent = "⬅ Voltar ao início";
+      voltar.onclick = voltarHome;
+      menuRelatorios.appendChild(voltar);
+    }
+
+    function showReport(id, btn, link, nomeDash) {
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      dashAtual.textContent = nomeDash;
+      loader.style.display = 'block';
+      placeholder.style.display = 'none';
+      document.querySelectorAll('iframe').forEach(f => f.classList.remove('show'));
+      const iframe = document.getElementById(id);
+      iframe.src = link;
+      setTimeout(() => {
+        iframe.classList.add('show');
+        loader.style.display = 'none';
+      }, 600);
+    }
+
+    function voltarHome() {
+      sidebar.style.display = 'none';
+      placeholder.style.display = 'none';
+      document.querySelectorAll('iframe').forEach(f => f.classList.remove('show'));
+      home.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
