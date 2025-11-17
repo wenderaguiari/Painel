@@ -192,7 +192,8 @@
 
 <script>
   // 🔐 Proteção via login: só entra se tiver feito login
-  if (!localStorage.getItem("usuario")) {
+  const usuario = localStorage.getItem("usuario");
+  if (!usuario) {
     window.location.href = "login.html";
   } else {
     document.body.style.display = "flex";
@@ -210,7 +211,7 @@
   const paineis = {
     logistica: {
       titulo: "Logística Reversa",
-      capa: "capa_logistica.jpg",
+      capa: "capa blog alloha logística.jpg", // ou o nome exato do arquivo da capa
       relatorios: [
         { nome: "B2B",  link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
         { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
@@ -219,7 +220,7 @@
     },
     frotas: {
       titulo: "Frotas",
-      capa: "capa_frotas.png",
+      capa: "gestao-de-frotas-equipes.png",
       relatorios: [
         { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
       ]
