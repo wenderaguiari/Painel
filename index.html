@@ -1,135 +1,282 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<title>Login - Painel Alloha Fibra</title>
+  <meta charset="utf-8" />
+  <title>Painéis Power BI - Alloha Fibra</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f6f8fb;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    nav {
+      width: 250px;
+      background: #001059;
+      color: white;
+      padding: 20px 15px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 4px 0 12px rgba(0,0,0,.2);
+      z-index: 10;
+    }
+    nav h2 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+    nav h3 {
+      margin: 0 0 15px 0;
+      font-size: 14px;
+      color: #48EF6C;
+      font-weight: 500;
+    }
+    nav button {
+      margin: 5px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: .3s;
+      text-align: left;
+      width: 100%;
+    }
+    nav button:hover,
+    nav button.active {
+      background:#48EF6C;
+      color:#001059;
+      font-weight:600;
+    }
+    main {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity .5s;
+      pointer-events: none;
+    }
+    iframe.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #home {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .card-container {
+      display:flex;
+      gap:40px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top: 20px;
+    }
+    .card {
+      width:230px;
+      height:160px;
+      background:#fff;
+      border-radius:15px;
+      box-shadow:0 4px 10px rgba(0,0,0,.1);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      cursor:pointer;
+      transition:.3s;
+      border:2px solid transparent;
+    }
+    .card:hover {
+      transform:scale(1.05);
+      border-color:#48EF6C;
+    }
+    .card img {
+      width:80px;
+      height:80px;
+      object-fit:contain;
+      margin-bottom:10px;
+    }
+    .card.disabled {
+      opacity:.5;
+      cursor:not-allowed;
+    }
+    .loader {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      border:6px solid #f3f3f3;
+      border-top:6px solid #48EF6C;
+      border-radius:50%;
+      width:40px;
+      height:40px;
+      animation:spin 1s linear infinite;
+      display:none;
+      z-index: 5;
+    }
+    @keyframes spin {
+      0%{transform:translate(-50%,-50%) rotate(0)}
+      100%{transform:translate(-50%,-50%) rotate(360deg)}
+    }
 
-<style>
-body {
-  margin:0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(135deg, #00124f, #0031a0, #00124f);
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  animation: bgMove 12s infinite alternate ease-in-out;
-  background-size: 400% 400%;
-}
-@keyframes bgMove {
-  from { background-position: 0% 0%; }
-  to   { background-position: 100% 100%; }
-}
-#card {
-  background:white;
-  width:350px;
-  padding:35px 30px;
-  border-radius:15px;
-  box-shadow:0 10px 35px rgba(0,0,0,0.25);
-  text-align:center;
-  animation: fadeIn 0.8s ease-out;
-}
-@keyframes fadeIn {
-  from { opacity:0; transform: translateY(20px); }
-  to   { opacity:1; transform: translateY(0); }
-}
-#card img {
-  width:160px;
-  margin-bottom:10px;
-}
-h2 {
-  margin:10px 0 20px 0;
-  font-size:22px;
-  color:#00124f;
-}
-input {
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  margin-top:10px;
-  font-size:15px;
-  transition:0.2s;
-}
-input:focus {
-  border-color:#0031a0;
-  box-shadow:0 0 4px #0031a0;
-  outline:none;
-}
-button {
-  width:100%;
-  padding:12px;
-  margin-top:20px;
-  background:#00124f;
-  color:white;
-  font-size:16px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.2s;
-  font-weight:bold;
-}
-button:hover {
-  background:#0031a0;
-  transform:scale(1.02);
-}
-#error {
-  color:#cc0000;
-  margin-top:10px;
-  font-size:14px;
-  font-weight:bold;
-  display:none;
-  animation: fadeIn 0.4s;
-}
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
-}
-</style>
+    .legenda {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #001059;
+    }
+  </style>
 </head>
 
-<body>
+<body style="display:none;">
+  <nav id="sidebar">
+    <h2 id="painelTitulo">Painel</h2>
+    <h3 id="dashAtual">Selecione um dashboard</h3>
+    <div id="menuRelatorios"></div>
+  </nav>
 
-<div id="card">
-  <img src="logo_alloha_positivo.png" alt="Alloha Fibra">
+  <main>
+    <div id="home">
+      <img src="logo_alloha_positivo.png" alt="Alloha Fibra" width="240" style="margin-bottom:30px"> 
+      <h1>Bem-vindo ao Painel Power BI</h1>
+      <p>Escolha o painel que deseja acessar:</p>
 
-  <h2>Acesso Restrito</h2>
-  <p style="color:#444; font-size:14px; margin-bottom:20px;">
-    Entre com seu e-mail autorizado
-  </p>
+      <div class="card-container">
+        <div class="card" onclick="abrirPainel('logistica')">
+          <img src="logistica.png" alt="Logística Reversa">
+          <span>Logística Reversa</span>
+        </div>
+        <div class="card" onclick="abrirPainel('frotas')">
+          <img src="frota.png" alt="Frotas">
+          <span>Frotas</span>
+        </div>
+        <div class="card disabled">
+          <img src="facilites.png" alt="Facilities">
+          <span>Facilities</span>
+          <small>EM CONSTRUÇÃO</small>
+        </div>
+      </div>
+    </div>
 
-  <input id="email" type="email" placeholder="seuemail@alloha.com" autocomplete="off">
+    <div id="placeholder" style="display:none; text-align:center;">
+      <img id="placeholderImg" src="" alt="Capa" style="width:auto; height:60vh; border-radius:12px; object-fit:contain;">
+      <div class="legenda">Selecione um BI para tomar sua decisão</div>
+    </div>
 
-  <button onclick="login()">Entrar</button>
+    <div class="loader" id="loader"></div>
 
-  <div id="error">Usuário não autorizado.</div>
-</div>
+    <iframe id="rel1"></iframe>
+    <iframe id="rel2"></iframe>
+    <iframe id="rel3"></iframe>
+    <iframe id="rel4"></iframe>
+    <iframe id="rel5"></iframe>
+    <iframe id="rel6"></iframe>
+  </main>
 
 <script>
-/* Lista de e-mails permitidos */
-const usuariosPermitidos = [
-  "wender.souza@alloha.com",
-  "matheus.sdoliveira@alloha.com",
-  "gerente@alloha.com"
-];
-
-function login() {
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  const errorBox = document.getElementById("error");
-
-  if (usuariosPermitidos.includes(email)) {
-    localStorage.setItem("usuario", email);
-    window.location.href = "index.html";
+  // 🔐 Proteção via login: só entra se tiver feito login
+  if (!localStorage.getItem("usuario")) {
+    window.location.href = "login.html";
   } else {
-    errorBox.style.display = "block";
-    errorBox.innerText = "Usuário não autorizado.";
-    errorBox.style.animation = "shake 0.3s";
+    document.body.style.display = "flex";
   }
-}
-</script>
 
+  const sidebar = document.getElementById('sidebar');
+  const home = document.getElementById('home');
+  const placeholder = document.getElementById('placeholder');
+  const placeholderImg = document.getElementById('placeholderImg');
+  const menuRelatorios = document.getElementById('menuRelatorios');
+  const titulo = document.getElementById('painelTitulo');
+  const dashAtual = document.getElementById('dashAtual');
+  const loader = document.getElementById('loader');
+
+  const paineis = {
+    logistica: {
+      titulo: "Logística Reversa",
+      capa: "capa_logistica.jpg",
+      relatorios: [
+        { nome: "B2B",  link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+        { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+        { nome: "B2C",  link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+      ]
+    },
+    frotas: {
+      titulo: "Frotas",
+      capa: "capa_frotas.png",
+      relatorios: [
+        { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+      ]
+    }
+  };
+
+  function abrirPainel(tipo) {
+    const painel = paineis[tipo];
+    titulo.textContent = painel.titulo;
+    dashAtual.textContent = "Selecione um dashboard";
+    sidebar.style.display = 'flex';
+    home.style.display = 'none';
+    placeholder.style.display = 'flex';
+    placeholderImg.src = painel.capa;
+    montarMenu(painel.relatorios);
+  }
+
+  function montarMenu(relatorios) {
+    menuRelatorios.innerHTML = '';
+
+    relatorios.forEach((rel, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = rel.nome;
+      btn.onclick = () => showReport(`rel${i+1}`, btn, rel.link, rel.nome);
+      menuRelatorios.appendChild(btn);
+    });
+
+    const voltar = document.createElement('button');
+    voltar.textContent = "⬅ Voltar ao início";
+    voltar.onclick = voltarHome;
+    menuRelatorios.appendChild(voltar);
+  }
+
+  function showReport(id, btn, link, nomeDash) {
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    dashAtual.textContent = nomeDash;
+
+    loader.style.display = 'block';
+    placeholder.style.display = 'none';
+
+    document.querySelectorAll('iframe').forEach(f => f.classList.remove('show'));
+    const iframe = document.getElementById(id);
+    iframe.src = link;
+
+    setTimeout(() => {
+      iframe.classList.add('show');
+      loader.style.display = 'none';
+    }, 600);
+  }
+
+  function voltarHome() {
+    sidebar.style.display = 'none';
+    placeholder.style.display = 'none';
+    document.querySelectorAll('iframe').forEach(f => f.classList.remove('show'));
+    home.style.display = 'flex';
+  }
+</script>
 </body>
 </html>
