@@ -493,35 +493,30 @@
 
     // ========= CONFIGURAÇÃO DOS PAINÉIS =========
     const paineis = {
-      logistica: {
-        titulo: "Logística Reversa",
-        capa: "capa blog alloha logística.png",
-        relatorios: [
-          {
-            nome: "B2B",
-            link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9"
-          },
-          {
-            nome: "Lojas",
-            link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9"
-          },
-          {
-            nome: "B2C",
-            link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9"
-          }
-        ]
-      },
-      frotas: {
-        titulo: "Frotas",
-        capa: "gestao-de-frotas-equipes.png",
-        relatorios: [
-          {
-            nome: "Utilização & Custo",
-            link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9"
-          }
-        ]
-      }
-    };
+  logistica: {
+    titulo: "Logística Reversa",
+    capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/capa%20blog%20alloha%20logística.jpg",
+    relatorios: [
+      { nome: "B2B", link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "B2C", link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Rastreabilidade", link: "https://app.powerbi.com/view?r=eyJrIjoiNmEyZjBhOGItYjU4Mi00OTUwLTg2YTEtZGExOGEzZmUzNjI4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Acompanhamento OS", link: "https://app.powerbi.com/view?r=eyJrIjoiMjlhZTYyZTYtNDQyZS00NDZiLWFjMDMtMTA5ZmFlM2M2OWIwIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Distribuição OS", link: "https://app.powerbi.com/view?r=eyJrIjoiNGRhMDYwMTUtN2E4OC00Mzg1LWEwMzctYjNjZjg5MGNhMzQxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+    ]
+  },
+
+  frotas: {
+    titulo: "Frotas",
+    capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/gestao-de-frotas-equipes.png",
+    relatorios: [
+      { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Performance de Abastecimento", link: "https://app.powerbi.com/view?r=eyJrIjoiYmQ3NGUzMTktNDJkYi00ZTg4LWI4ZTctMmM2MWVhZjQ0NDBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+      { nome: "Manutenção", link: "https://app.powerbi.com/view?r=eyJrIjoiNzJkMWZkOTAtZjYxZi00N2YyLTg1MTctN2ZkOGVmM2YwZTA4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+    ]
+  }
+};
+
 
     // ========= FUNÇÕES PRINCIPAIS =========
 
@@ -648,3 +643,4 @@
   </script>
 </body>
 </html>
+
