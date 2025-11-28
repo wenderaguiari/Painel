@@ -5,268 +5,176 @@
   <title>Painéis Power BI - Alloha Fibra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Fonte profissional -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --azul-escuro: #001059;
       --verde: #48EF6C;
-      --cinza-fundo: #f6f8fb;
+      --cinza-fundo: #f4f6fa;
       --branco: #ffffff;
-      --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.12);
-      --radius-card: 16px;
-      --transicao: 0.3s ease;
+      --cinza-texto: #4b5563;
+      --sombra: 0 4px 14px rgba(0,0,0,0.08);
+      --radius: 14px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: "Inter", sans-serif;
       background: var(--cinza-fundo);
       display: flex;
       height: 100vh;
       overflow: hidden;
     }
 
-    /* ===== SIDEBAR ===== */
+    /* SIDEBAR */
     nav {
       width: 260px;
       background: var(--azul-escuro);
       color: var(--branco);
-      padding: 20px 16px;
+      padding: 22px 18px;
       display: none;
       flex-direction: column;
-      box-shadow: 4px 0 12px rgba(0, 0, 0, .25);
+      box-shadow: 4px 0 14px rgba(0,0,0,.25);
       z-index: 20;
-      position: relative;
     }
 
     nav h2 {
-      margin: 0 0 4px 0;
-      font-size: 18px;
+      margin: 0 0 6px 0;
+      font-size: 19px;
       font-weight: 600;
-      letter-spacing: .5px;
     }
 
     nav h3 {
-      margin: 0 0 14px 0;
+      margin: 0 0 20px 0;
       font-size: 13px;
       color: var(--verde);
-      font-weight: 500;
     }
 
     nav button {
-      margin: 5px 0;
-      padding: 10px 12px;
+      margin: 4px 0;
+      padding: 12px 14px;
       border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.10);
       color: var(--branco);
       cursor: pointer;
-      font-size: 14px;
-      transition: var(--transicao);
+      font-size: 15px;
       text-align: left;
       width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      transition: .25s;
+      font-weight: 500;
     }
 
     nav button:hover,
     nav button.active {
       background: var(--verde);
       color: var(--azul-escuro);
+      transform: translateX(5px);
       font-weight: 600;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
     }
 
-    nav button span.icone {
-      font-size: 16px;
-    }
-
-    /* Botão fechar sidebar (mobile) */
-    #btnFecharSidebar {
-      display: none;
-      margin-bottom: 10px;
-      background: transparent;
-      border: none;
-      color: var(--branco);
-      font-size: 20px;
-      cursor: pointer;
-      align-self: flex-end;
-    }
-
-    /* ===== MAIN / CONTEÚDO ===== */
+    /* MAIN */
     main {
       flex: 1;
-      position: relative;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    /* Header do main */
     .topbar {
-      height: 56px;
+      height: 60px;
+      background: var(--branco);
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
-      background: var(--branco);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
-      z-index: 10;
+      padding: 0 22px;
     }
 
-    .topbar-esq {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    #btnMenuMobile {
-      display: none;
-      border: none;
-      background: transparent;
-      font-size: 22px;
-      cursor: pointer;
+    .topbar .titulo-area span.titulo {
+      font-size: 19px;
       color: var(--azul-escuro);
-    }
-
-    .topbar-titulo {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar-titulo span.titulo {
-      font-size: 18px;
       font-weight: 600;
-      color: var(--azul-escuro);
     }
 
-    .topbar-titulo span.subtitulo {
+    .topbar .titulo-area span.subtitulo {
       font-size: 12px;
-      color: #6b7280;
+      color: var(--cinza-texto);
     }
 
-    .topbar-dir {
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    .topbar-dir span.usuario {
-      font-weight: 600;
-      color: var(--azul-escuro);
-    }
-
-    /* Área de conteúdo (home / placeholder / iframes) */
     .conteudo {
       flex: 1;
       position: relative;
+      padding: 22px;
       overflow: hidden;
-      padding: 20px;
     }
 
-    /* ===== HOME ===== */
+    /* HOME */
     #home {
       position: absolute;
       inset: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      gap: 12px;
       text-align: center;
-      padding: 20px;
-      gap: 10px;
     }
 
-    #home h1 {
-      margin: 0;
-      font-size: 26px;
-      color: var(--azul-escuro);
-    }
+    #home h1 { font-size: 26px; color: var(--azul-escuro); }
 
-    #home p {
-      margin: 4px 0 16px 0;
-      color: #4b5563;
-      font-size: 14px;
-    }
+    #home p { font-size: 14px; color: var(--cinza-texto); }
 
     .card-container {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .card {
-      width: 230px;
+      width: 240px;
       height: 170px;
       background: var(--branco);
-      border-radius: var(--radius-card);
-      box-shadow: var(--sombra-card);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 10px;
       cursor: pointer;
-      transition: var(--transicao);
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(72, 239, 108, 0.2), transparent 55%);
-      opacity: 0;
-      transition: var(--transicao);
-    }
-
-    .card:hover::before {
-      opacity: 1;
+      transition: .25s;
     }
 
     .card:hover {
-      transform: translateY(-4px) scale(1.03);
-      border-color: var(--verde);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.12);
     }
 
     .card img {
       width: 70px;
-      height: 70px;
-      object-fit: contain;
       margin-bottom: 10px;
     }
 
     .card span {
-      font-weight: 600;
       color: var(--azul-escuro);
-      font-size: 15px;
+      font-size: 16px;
+      font-weight: 600;
     }
 
     .card small {
-      margin-top: 4px;
-      font-size: 11px;
-      color: #9ca3af;
+      color: var(--cinza-texto);
+      font-size: 12px;
     }
 
-    .card.disabled {
-      opacity: .5;
-      cursor: not-allowed;
-      transform: none;
-      border-style: dashed;
-    }
+    .card.disabled { opacity: .5; cursor: not-allowed; }
 
-    .card.disabled:hover {
-      transform: none;
-      border-color: transparent;
-    }
-
-    /* ===== PLACEHOLDER ===== */
+    /* PLACEHOLDER */
     #placeholder {
       position: absolute;
       inset: 0;
@@ -274,32 +182,15 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
     }
 
-    #placeholderImg {
-      max-width: 70vw;
-      max-height: 60vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
+    #placeholder img {
+      max-width: 80%;
       border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: var(--sombra-card);
-      background: #e5e7eb;
+      box-shadow: var(--sombra);
+      margin-bottom: 10px;
     }
 
-    .legenda {
-      margin-top: 4px;
-      font-weight: 600;
-      color: var(--azul-escuro);
-      font-size: 15px;
-    }
-
-    /* ===== IFRAMES ===== */
     iframe {
       width: 100%;
       height: 100%;
@@ -307,164 +198,95 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity .5s;
-      pointer-events: none;
+      transition: opacity .6s;
       background: #f9fafb;
     }
 
-    iframe.show {
-      opacity: 1;
-      pointer-events: all;
-    }
+    iframe.show { opacity: 1; }
 
-    /* ===== LOADER ===== */
     .loader {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid var(--verde);
+      width: 40px; height: 40px;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      border: 6px solid #ddd;
+      border-top: 6px solid var(--verde);
       animation: spin 1s linear infinite;
       display: none;
-      z-index: 5;
+      z-index: 10;
     }
 
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
+    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-    /* ===== RESPONSIVIDADE ===== */
-    @media (max-width: 960px) {
-      nav {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        transform: translateX(-100%);
-        transition: transform .3s ease;
-      }
-
-      nav.aberto {
-        transform: translateX(0);
-      }
-
-      #btnFecharSidebar {
-        display: block;
-      }
-
-      #btnMenuMobile {
-        display: inline-flex;
-      }
-
-      .conteudo {
-        padding: 12px;
-      }
-
-      #placeholderImg {
-        max-width: 90vw;
-        max-height: 50vh;
-      }
-
-      .card {
-        width: 190px;
-        height: 150px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      #home h1 {
-        font-size: 22px;
-      }
-
-      #home p {
-        font-size: 13px;
-      }
-
-      .topbar {
-        padding-inline: 12px;
-      }
-    }
   </style>
 </head>
 
 <body style="display:none;">
-  <!-- ===== SIDEBAR ===== -->
+
   <nav id="sidebar">
-    <button id="btnFecharSidebar" title="Fechar menu">&times;</button>
     <h2 id="painelTitulo">Painel</h2>
     <h3 id="dashAtual">Selecione um dashboard</h3>
     <div id="menuRelatorios"></div>
   </nav>
 
-  <!-- ===== MAIN ===== -->
   <main>
-    <!-- Topbar -->
     <div class="topbar">
-      <div class="topbar-esq">
-        <button id="btnMenuMobile" title="Abrir menu">&#9776;</button>
-        <div class="topbar-titulo">
-          <span class="titulo">Painéis Power BI</span>
-          <span class="subtitulo">Alloha Fibra · Logística & Frotas</span>
-        </div>
+      <div class="titulo-area">
+        <span class="titulo">Painéis Power BI</span>
+        <br>
+        <span class="subtitulo">Alloha Fibra · Logística & Frotas</span>
       </div>
-      <div class="topbar-dir">
-        <span>Usuário: </span><span class="usuario" id="nomeUsuarioTopbar">Carregando...</span>
+      <div>
+        Usuário: <strong id="nomeUsuarioTopbar"></strong>
       </div>
     </div>
 
-    <!-- Conteúdo principal -->
     <div class="conteudo">
-      <!-- HOME -->
-      <div id="home">
-        <img src="logo_alloha_positivo.png" alt="Alloha Fibra" width="220" style="margin-bottom: 18px">
 
-        <h1>Bem-vindo ao Painel Power BI</h1>
+      <div id="home">
+        <img src="logo_alloha_positivo.png" width="220">
+        <h1>Bem‑vindo ao Painel Power BI</h1>
         <p>Selecione o painel que deseja analisar para apoiar sua tomada de decisão.</p>
 
         <div class="card-container">
           <div class="card" onclick="abrirPainel('logistica')">
-            <img src="logistica.png" alt="Logística Reversa">
+            <img src="logistica.png">
             <span>Logística Reversa</span>
             <small>Indicadores B2B, Lojas e B2C</small>
           </div>
 
           <div class="card" onclick="abrirPainel('frotas')">
-            <img src="frota.png" alt="Frotas">
+            <img src="frota.png">
             <span>Frotas</span>
             <small>Utilização e custo operacional</small>
           </div>
 
           <div class="card disabled">
-            <img src="facilites.png" alt="Facilities">
+            <img src="facilites.png">
             <span>Facilities</span>
-            <small>EM CONSTRUÇÃO</small>
+            <small>Em construção</small>
           </div>
         </div>
       </div>
 
-      <!-- PLACEHOLDER CAPA -->
       <div id="placeholder">
-        <img id="placeholderImg" src="" alt="Capa do painel">
-        <div class="legenda">Selecione um BI no menu lateral para tomar sua decisão.</div>
+        <img id="placeholderImg">
+        <div class="legenda">Selecione um BI no menu lateral.</div>
       </div>
 
-      <!-- LOADER -->
       <div class="loader" id="loader"></div>
 
-      <!-- IFRAMES -->
       <iframe id="rel1"></iframe>
       <iframe id="rel2"></iframe>
       <iframe id="rel3"></iframe>
       <iframe id="rel4"></iframe>
       <iframe id="rel5"></iframe>
       <iframe id="rel6"></iframe>
+
     </div>
   </main>
+
 
   <script>
     // ========= PROTEÇÃO DE LOGIN =========
@@ -644,6 +466,7 @@
   </script>
 </body>
 </html>
+
 
 
 
