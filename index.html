@@ -4,177 +4,258 @@
   <meta charset="utf-8" />
   <title>Painéis Power BI - Alloha Fibra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Fonte profissional -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --azul-escuro: #001059;
       --verde: #48EF6C;
-      --cinza-fundo: #f4f6fa;
+      --cinza-fundo: #f6f8fb;
       --branco: #ffffff;
-      --cinza-texto: #4b5563;
-      --sombra: 0 4px 14px rgba(0,0,0,0.08);
-      --radius: 14px;
+      --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --radius-card: 16px;
+      --transicao: 0.3s ease;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: "Inter", sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       background: var(--cinza-fundo);
       display: flex;
       height: 100vh;
       overflow: hidden;
     }
 
-    /* SIDEBAR */
+    /* ===== SIDEBAR ===== */
     nav {
       width: 260px;
       background: var(--azul-escuro);
       color: var(--branco);
-      padding: 22px 18px;
+      padding: 20px 16px;
       display: none;
       flex-direction: column;
-      box-shadow: 4px 0 14px rgba(0,0,0,.25);
+      box-shadow: 4px 0 12px rgba(0, 0, 0, .25);
       z-index: 20;
+      position: relative;
     }
 
     nav h2 {
-      margin: 0 0 6px 0;
-      font-size: 19px;
+      margin: 0 0 4px 0;
+      font-size: 18px;
       font-weight: 600;
+      letter-spacing: .5px;
     }
 
     nav h3 {
-      margin: 0 0 20px 0;
+      margin: 0 0 14px 0;
       font-size: 13px;
       color: var(--verde);
+      font-weight: 500;
     }
 
     nav button {
-      margin: 4px 0;
-      padding: 12px 14px;
+      margin: 5px 0;
+      padding: 10px 12px;
       border: none;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.10);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
       color: var(--branco);
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
+      transition: var(--transicao);
       text-align: left;
       width: 100%;
-      transition: .25s;
-      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     nav button:hover,
     nav button.active {
       background: var(--verde);
       color: var(--azul-escuro);
-      transform: translateX(5px);
       font-weight: 600;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
     }
 
-    /* MAIN */
+    nav button span.icone {
+      font-size: 16px;
+    }
+
+    #btnFecharSidebar {
+      display: none;
+      margin-bottom: 10px;
+      background: transparent;
+      border: none;
+      color: var(--branco);
+      font-size: 20px;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    /* ===== MAIN ===== */
     main {
       flex: 1;
+      position: relative;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
     .topbar {
-      height: 60px;
-      background: var(--branco);
-      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 22px;
+      padding: 0 18px;
+      background: var(--branco);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+      z-index: 10;
     }
 
-    .topbar .titulo-area span.titulo {
-      font-size: 19px;
+    .topbar-esq {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #btnMenuMobile {
+      display: none;
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      cursor: pointer;
       color: var(--azul-escuro);
+    }
+
+    .topbar-titulo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar-titulo span.titulo {
+      font-size: 18px;
       font-weight: 600;
+      color: var(--azul-escuro);
     }
 
-    .topbar .titulo-area span.subtitulo {
+    .topbar-titulo span.subtitulo {
       font-size: 12px;
-      color: var(--cinza-texto);
+      color: #6b7280;
     }
 
-    .conteudo {
-      flex: 1;
-      position: relative;
-      padding: 22px;
-      overflow: hidden;
+    .topbar-dir {
+      font-size: 12px;
+      color: #6b7280;
     }
 
-    /* HOME */
+    .topbar-dir span.usuario {
+      font-weight: 600;
+      color: var(--azul-escuro);
+    }
+
+    /* ===== HOME ===== */
     #home {
       position: absolute;
       inset: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      gap: 12px;
+      align-items: center;
       text-align: center;
+      padding: 20px;
+      gap: 10px;
     }
 
-    #home h1 { font-size: 26px; color: var(--azul-escuro); }
+    #home h1 {
+      margin: 0;
+      font-size: 26px;
+      color: var(--azul-escuro);
+    }
 
-    #home p { font-size: 14px; color: var(--cinza-texto); }
+    #home p {
+      margin: 4px 0 16px 0;
+      color: #4b5563;
+      font-size: 14px;
+    }
 
     .card-container {
       display: flex;
-      gap: 28px;
+      gap: 32px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .card {
-      width: 240px;
+      width: 230px;
       height: 170px;
       background: var(--branco);
-      border-radius: var(--radius);
-      box-shadow: var(--sombra);
+      border-radius: var(--radius-card);
+      box-shadow: var(--sombra-card);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 10px;
       cursor: pointer;
-      transition: .25s;
+      transition: var(--transicao);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(72, 239, 108, 0.2), transparent 55%);
+      opacity: 0;
+      transition: var(--transicao);
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 20px rgba(0,0,0,.12);
+      transform: translateY(-4px) scale(1.03);
+      border-color: var(--verde);
     }
 
     .card img {
       width: 70px;
+      height: 70px;
+      object-fit: contain;
       margin-bottom: 10px;
     }
 
     .card span {
-      color: var(--azul-escuro);
-      font-size: 16px;
       font-weight: 600;
+      color: var(--azul-escuro);
+      font-size: 15px;
     }
 
     .card small {
-      color: var(--cinza-texto);
-      font-size: 12px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: #9ca3af;
     }
 
-    .card.disabled { opacity: .5; cursor: not-allowed; }
+    .card.disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+      border-style: dashed;
+    }
 
-    /* PLACEHOLDER */
+    .card.disabled:hover {
+      transform: none;
+      border-color: transparent;
+    }
+
+    /* ===== PLACEHOLDER ===== */
     #placeholder {
       position: absolute;
       inset: 0;
@@ -182,15 +263,32 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
     }
 
-    #placeholder img {
-      max-width: 80%;
+    #placeholderImg {
+      max-width: 70vw;
+      max-height: 60vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
       border-radius: 12px;
-      box-shadow: var(--sombra);
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      box-shadow: var(--sombra-card);
+      background: #e5e7eb;
     }
 
+    .legenda {
+      margin-top: 4px;
+      font-weight: 600;
+      color: var(--azul-escuro);
+      font-size: 15px;
+    }
+
+    /* ===== IFRAMES ===== */
     iframe {
       width: 100%;
       height: 100%;
@@ -198,81 +296,150 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity .6s;
+      transition: opacity .5s;
+      pointer-events: none;
       background: #f9fafb;
     }
 
-    iframe.show { opacity: 1; }
-
-    .loader {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      border: 6px solid #ddd;
-      border-top: 6px solid var(--verde);
-      animation: spin 1s linear infinite;
-      display: none;
-      z-index: 10;
+    iframe.show {
+      opacity: 1;
+      pointer-events: all;
     }
 
-    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    /* ===== LOADER ===== */
+    .loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid var(--verde);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      display: none;
+      z-index: 5;
+    }
 
+    @keyframes spin {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* ===== RESPONSIVIDADE ===== */
+    @media (max-width: 960px) {
+      nav {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        transition: transform .3s ease;
+      }
+
+      nav.aberto {
+        transform: translateX(0);
+      }
+
+      #btnFecharSidebar {
+        display: block;
+      }
+
+      #btnMenuMobile {
+        display: inline-flex;
+      }
+
+      .conteudo {
+        padding: 12px;
+      }
+
+      #placeholderImg {
+        max-width: 90vw;
+        max-height: 50vh;
+      }
+
+      .card {
+        width: 190px;
+        height: 150px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #home h1 {
+        font-size: 22px;
+      }
+
+      #home p {
+        font-size: 13px;
+      }
+
+      .topbar {
+        padding-inline: 12px;
+      }
+    }
   </style>
 </head>
 
 <body style="display:none;">
-
+  <!-- ===== SIDEBAR ===== -->
   <nav id="sidebar">
+    <button id="btnFecharSidebar" title="Fechar menu">&times;</button>
     <h2 id="painelTitulo">Painel</h2>
     <h3 id="dashAtual">Selecione um dashboard</h3>
     <div id="menuRelatorios"></div>
   </nav>
 
+  <!-- ===== MAIN ===== -->
   <main>
     <div class="topbar">
-      <div class="titulo-area">
-        <span class="titulo">Painéis Power BI</span>
-        <br>
-        <span class="subtitulo">Alloha Fibra · Logística & Frotas</span>
+      <div class="topbar-esq">
+        <button id="btnMenuMobile" title="Abrir menu">&#9776;</button>
+        <div class="topbar-titulo">
+          <span class="titulo">Painéis Power BI</span>
+          <span class="subtitulo">Alloha Fibra · Logística & Frotas</span>
+        </div>
       </div>
-      <div>
-        Usuário: <strong id="nomeUsuarioTopbar"></strong>
+      <div class="topbar-dir">
+        <span>Usuário: </span><span class="usuario" id="nomeUsuarioTopbar">Carregando...</span>
       </div>
     </div>
 
     <div class="conteudo">
-
       <div id="home">
-        <img src="logo_alloha_positivo.png" width="220">
-        <h1>Bem‑vindo ao Painel Power BI</h1>
+        <img src="logo_alloha_positivo.png" alt="Alloha Fibra" width="220" style="margin-bottom: 18px">
+        <h1>Bem-vindo ao Painel Power BI</h1>
         <p>Selecione o painel que deseja analisar para apoiar sua tomada de decisão.</p>
 
         <div class="card-container">
           <div class="card" onclick="abrirPainel('logistica')">
-            <img src="logistica.png">
+            <img src="logistica.png" alt="Logística Reversa">
             <span>Logística Reversa</span>
             <small>Indicadores B2B, Lojas e B2C</small>
           </div>
 
           <div class="card" onclick="abrirPainel('frotas')">
-            <img src="frota.png">
+            <img src="frota.png" alt="Frotas">
             <span>Frotas</span>
             <small>Utilização e custo operacional</small>
           </div>
 
           <div class="card disabled">
-            <img src="facilites.png">
+            <img src="facilites.png" alt="Facilities">
             <span>Facilities</span>
-            <small>Em construção</small>
+            <small>EM CONSTRUÇÃO</small>
           </div>
         </div>
       </div>
 
       <div id="placeholder">
-        <img id="placeholderImg">
-        <div class="legenda">Selecione um BI no menu lateral.</div>
+        <img id="placeholderImg" src="" alt="Capa do painel">
+        <div class="legenda">Selecione um BI no menu lateral para tomar sua decisão.</div>
       </div>
 
       <div class="loader" id="loader"></div>
@@ -283,13 +450,10 @@
       <iframe id="rel4"></iframe>
       <iframe id="rel5"></iframe>
       <iframe id="rel6"></iframe>
-
     </div>
   </main>
 
-
   <script>
-    // ========= PROTEÇÃO DE LOGIN =========
     const usuario = localStorage.getItem("usuario");
     if (!usuario) {
       window.location.href = "login.html";
@@ -297,7 +461,6 @@
       document.body.style.display = "flex";
     }
 
-    // ========= ELEMENTOS =========
     const sidebar = document.getElementById('sidebar');
     const home = document.getElementById('home');
     const placeholder = document.getElementById('placeholder');
@@ -310,38 +473,34 @@
     const btnFecharSidebar = document.getElementById('btnFecharSidebar');
     const nomeUsuarioTopbar = document.getElementById('nomeUsuarioTopbar');
 
-    // Exibe nome do usuário na topbar (se salvo em localStorage)
     nomeUsuarioTopbar.textContent = usuario || "Usuário";
 
-    // ========= CONFIGURAÇÃO DOS PAINÉIS =========
     const paineis = {
-  logistica: {
-    titulo: "Logística Reversa",
-    capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/capa%20blog%20alloha%20logística.jpg",
-    relatorios: [
-      { nome: "B2B", link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "B2C", link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Rastreabilidade", link: "https://app.powerbi.com/view?r=eyJrIjoiNmEyZjBhOGItYjU4Mi00OTUwLTg2YTEtZGExOGEzZmUzNjI4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Acompanhamento OS", link: "https://app.powerbi.com/view?r=eyJrIjoiMjlhZTYyZTYtNDQyZS00NDZiLWFjMDMtMTA5ZmFlM2M2OWIwIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Distribuição OS", link: "https://app.powerbi.com/view?r=eyJrIjoiNGRhMDYwMTUtN2E4OC00Mzg1LWEwMzctYjNjZjg5MGNhMzQxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
-    ]
-  },
+      logistica: {
+        titulo: "Logística Reversa",
+        capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/capa%20blog%20alloha%20logística.jpg",
+        relatorios: [
+          { nome: "B2B", link: "https://app.powerbi.com/view?r=eyJrIjoiOTgwZGJhNzktNjQxOC00ZGQ2LWJlNDEtOTk2Yjc3ODA1NmU5IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Lojas", link: "https://app.powerbi.com/view?r=eyJrIjoiNzBhYjZiYzktNzNkZS00MzllLTgxNmMtOTUyMmE2MzMxYmViIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "B2C", link: "https://app.powerbi.com/view?r=eyJrIjoiN2ZiYWE3OTAtNTQ1Yi00N2I2LWFiNjktZTE1YjRlMTg5MjBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Rastreabilidade", link: "https://app.powerbi.com/view?r=eyJrIjoiNmEyZjBhOGItYjU4Mi00OTUwLTg2YTEtZGExOGEzZmUzNjI4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Acompanhamento OS", link: "https://app.powerbi.com/view?r=eyJrIjoiMjlhZTYyZTYtNDQyZS00NDZiLWFjMDMtMTA5ZmFlM2M2OWIwIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Distribuição OS", link: "https://app.powerbi.com/view?r=eyJrIjoiNGRhMDYwMTUtN2E4OC00Mzg1LWEwMzctYjNjZjg5MGNhMzQxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+        ]
+      },
 
-  frotas: {
-    titulo: "Frotas",
-    capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/gestao-de-frotas-equipes.png",
-    relatorios: [
-      { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Performance de Abastecimento", link: "https://app.powerbi.com/view?r=eyJrIjoiYmQ3NGUzMTktNDJkYi00ZTg4LWI4ZTctMmM2MWVhZjQ0NDBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Manutenção", link: "https://app.powerbi.com/view?r=eyJrIjoiNzJkMWZkOTAtZjYxZi00N2YyLTg1MTctN2ZkOGVmM2YwZTA4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Gestão Multas", link: "https://app.powerbi.com/view?r=eyJrIjoiYzJhMDZkYTEtOTIyYi00ZTYzLThhZTUtY2E4Zjc1NTk5ZTE4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
-      { nome: "Análise Estratégica de Combustível por Estado", link: "https://app.powerbi.com/view?r=eyJrIjoiZTA1Zjc4NjAtNTk0ZC00MWVmLWE0ZTMtMmE5MjMxYWJlM2QxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
-      ]
-  }
-};
-
-    // ========= FUNÇÕES PRINCIPAIS =========
+      frotas: {
+        titulo: "Frotas",
+        capa: "https://allohafibra.sharepoint.com/sites/Frotas/Documentos%20Compartilhados/Frente%20de%20Performace%20Frotas/Site/gestao-de-frotas-equipes.png",
+        relatorios: [
+          { nome: "Utilização & Custo", link: "https://app.powerbi.com/view?r=eyJrIjoiZTljZjlhYTUtMmE2ZC00ZDJkLTllYzItMGIzMWNiNWE1ZjIyIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Performance de Abastecimento", link: "https://app.powerbi.com/view?r=eyJrIjoiYmQ3NGUzMTktNDJkYi00ZTg4LWI4ZTctMmM2MWVhZjQ0NDBhIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Manutenção", link: "https://app.powerbi.com/view?r=eyJrIjoiNzJkMWZkOTAtZjYxZi00N2YyLTg1MTctN2ZkOGVmM2YwZTA4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Gestão Multas", link: "https://app.powerbi.com/view?r=eyJrIjoiYzJhMDZkYTEtOTIyYi00ZTYzLThhZTUtY2E4Zjc1NTk5ZTE4IiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" },
+          { nome: "Análise Estratégica de Combustível por Estado", link: "https://app.powerbi.com/view?r=eyJrIjoiZTA1Zjc4NjAtNTk0ZC00MWVmLWE0ZTMtMmE5MjMxYWJlM2QxIiwidCI6IjdlYmFhNDY3LTNhY2UtNGE5Yy1hZDkxLTRlODQ5MzNhNjYwNyJ9" }
+        ]
+      }
+    };
 
     function abrirPainel(tipo) {
       const painel = paineis[tipo];
@@ -350,14 +509,11 @@
       titulo.textContent = painel.titulo;
       dashAtual.textContent = "Selecione um dashboard";
 
-      // Mostra sidebar
       sidebar.style.display = 'flex';
 
-      // Fechar home e iframes
       home.style.display = 'none';
       esconderTodosRelatorios();
 
-      // Mostrar placeholder com capa
       placeholder.style.display = 'flex';
       placeholderImg.src = painel.capa || "";
       placeholderImg.alt = "Capa do painel " + painel.titulo;
@@ -368,7 +524,6 @@
     function montarMenu(relatorios) {
       menuRelatorios.innerHTML = '';
 
-      // Cria botões para cada relatório
       relatorios.forEach((rel, i) => {
         const btn = document.createElement('button');
         btn.innerHTML = `<span class="icone">📊</span> ${rel.nome}`;
@@ -376,7 +531,6 @@
         menuRelatorios.appendChild(btn);
       });
 
-      // Botão voltar ao início
       const voltar = document.createElement('button');
       voltar.innerHTML = `<span class="icone">⬅</span> Voltar ao início`;
       voltar.onclick = voltarHome;
@@ -384,23 +538,19 @@
     }
 
     function showReport(idIframe, btn, link, nomeDash) {
-      // Marca botão ativo
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
       dashAtual.textContent = nomeDash;
 
-      // Loader / placeholder
       loader.style.display = 'block';
       placeholder.style.display = 'none';
 
-      // Esconde todos iframes
       esconderTodosRelatorios();
 
-      // Carrega o correto
       const iframe = document.getElementById(idIframe);
       if (!iframe) return;
 
-      // Força recarregar somente se link mudar (opcional)
       if (iframe.src !== link) {
         iframe.src = link;
       }
@@ -416,23 +566,19 @@
     }
 
     function voltarHome() {
-      // Esconde sidebar em telas pequenas, mas mantém em desktop
       if (window.innerWidth <= 960) {
         sidebar.classList.remove('aberto');
       }
-      // Esconde placeholder e relatórios
+
       placeholder.style.display = 'none';
       esconderTodosRelatorios();
 
-      // Reseta textos
       titulo.textContent = 'Painel';
       dashAtual.textContent = 'Selecione um dashboard';
 
-      // Mostra home
       home.style.display = 'flex';
     }
 
-    // ========= CONTROLE DA SIDEBAR (MOBILE) =========
     btnMenuMobile.addEventListener('click', () => {
       sidebar.style.display = 'flex';
       sidebar.classList.add('aberto');
@@ -442,36 +588,24 @@
       sidebar.classList.remove('aberto');
     });
 
-    // Fecha sidebar clicando fora (mobile)
     document.addEventListener('click', (e) => {
       const clicouForaSidebar = !sidebar.contains(e.target);
       const clicouNoMenu = e.target === btnMenuMobile;
+
       if (window.innerWidth <= 960 && clicouForaSidebar && !clicouNoMenu) {
         sidebar.classList.remove('aberto');
       }
     });
 
-    // Ajusta exibição da sidebar ao redimensionar
     window.addEventListener('resize', () => {
       if (window.innerWidth > 960) {
-        // Desktop: deixa sidebar visível se já estiver sendo usada
         if (menuRelatorios.children.length > 0) {
           sidebar.style.display = 'flex';
         }
       } else {
-        // Mobile: esconde até clicarem no menu
         sidebar.classList.remove('aberto');
       }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
